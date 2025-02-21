@@ -1,8 +1,8 @@
-import { SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { Socket, Server } from "socket.io";
 
 @WebSocketGateway(3200, {}) // Define the port number for the WebSocket server
-export class ChatGateway {
+export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     @WebSocketServer() server: Server
 
@@ -16,4 +16,11 @@ export class ChatGateway {
     }
     // emit and broadcast are two methods that can be used to send messages to clients.
     // The emit method sends a message to a specific client, while the broadcast method sends a message to all clients connected to the server.
+
+    handleConnection(client: Socket) {
+        console.log('New user connected...', client.id);
+    }
+    handleDisconnect(client: Socket) {
+        console.log('User disconnected...', client.id);
+    }
 }
