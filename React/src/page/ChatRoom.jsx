@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
 
 const socket = io("http://localhost:3200"); // Kết nối với server WebSocket
@@ -6,6 +7,8 @@ const socket = io("http://localhost:3200"); // Kết nối với server WebSocke
 const ChatRoom = () => {
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");
+    const location = useLocation();
+    const user = location.state?.user || { username: "Guest" }; // Get user state from login page 
 
     useEffect(() => {
         socket.on("message", (message) => {
@@ -36,6 +39,7 @@ const ChatRoom = () => {
 
     return (
         <div className="flex flex-col h-screen p-4 bg-gray-100">
+            <div> <h3>Hello {user.name}</h3></div>
             <div className="flex-1 overflow-y-auto p-4 bg-white rounded-lg shadow-md">
                 {messages.map((msg, index) => (
                     <div key={index} className="p-2 border-b border-gray-200">
