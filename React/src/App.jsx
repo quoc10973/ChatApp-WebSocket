@@ -1,12 +1,11 @@
 import React from 'react'
 import './index.css'
-import ChatRoom from './page/ChatRoom'
+import LoginPage from './page/LoginPage'
 const App = () => {
   return (
     <>
-      <ChatRoom />
+      <LoginPage />
     </>
   )
 }
-
 export default App
